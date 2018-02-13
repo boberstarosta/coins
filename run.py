@@ -7,5 +7,4 @@ if __name__ == "__main__":
     m = models.Metal(name='test_met_1')
     session.add(m)
     session.commit()
-    print(m.id)
-
+    print(m.id, m.name, m.coins, m.prices)
