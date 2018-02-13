@@ -2,6 +2,7 @@ import datetime
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Sequence, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from . import db
 
 
 Base = declarative_base()
@@ -16,6 +17,11 @@ class Metal(Base):
 
     prices = relationship('Price', back_populates='metal')
     coins = relationship('Coin', back_populates='metal')
+
+    @property
+    def last_price(self):
+        session = db.Session.object_session(self)
+        return session.query(Price).order_by(Price.time.desc()).first()
 
 
 class Price(Base):
