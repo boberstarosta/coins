@@ -8,9 +8,9 @@ update_metal_prices()
 session = db.get_session()
 
 silver = session.query(Metal).filter_by(symbol='XAGPLN').first()
-
-print(silver.name)
-
+print(silver)
 print(silver.last_price)
 
-print(silver.last_price.time, silver.last_price.value)
+gold = session.query(Metal).filter_by(symbol='XAUPLN').first()
+print(gold)
+print(gold.last_price)

@@ -21,7 +21,10 @@ class Metal(Base):
     @property
     def last_price(self):
         session = db.Session.object_session(self)
-        return session.query(Price).order_by(Price.time.desc()).first()
+        return session.query(Price).filter_by(metal_id=self.id).order_by(Price.time.desc()).first()
+
+    def __repr__(self):
+        return '<{} {} {} {}>'.format(self.__class__.__name__, self.id, self.symbol, self.name)
 
 
 class Price(Base):
@@ -34,6 +37,9 @@ class Price(Base):
 
     metal = relationship('Metal', back_populates='prices')
 
+    def __repr__(self):
+        return '<{} {} {} {} {}>'.format(self.__class__.__name__, self.id, self.metal.symbol, self.time, self.value)
+
 
 class Coin(Base):
     __tablename__ = 'coin'
@@ -42,3 +48,6 @@ class Coin(Base):
     metal_id = Column(Integer, ForeignKey('metal.id'))
 
     metal = relationship('Metal', back_populates='coins')
+
+    def __repr__(self):
+        return '<{} {}>'.format(self.__class__.__name__, self.id)
