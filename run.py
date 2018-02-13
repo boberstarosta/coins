@@ -1,10 +1,11 @@
-from coins import db, models
+from coins import core, db, models
 
 
 if __name__ == "__main__":
-    models.Base.metadata.create_all(db.engine)
-    session = db.get_session()
-    m = models.Metal(name='test_met_1')
-    session.add(m)
-    session.commit()
-    print(m.id, m.name, m.coins, m.prices)
+    print('Updating prices...')
+    core.update_metal_prices()
+    session = db.Session()
+    metals = session.query(models.Metal).all()
+    print('Latest prices:')
+    for metal in metals:
+        print('{}: {}'.format(metal.name, metal.last_price.value))
