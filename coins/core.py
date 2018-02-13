@@ -1,7 +1,6 @@
 import re
 import requests
 from bs4 import BeautifulSoup
-from . import db
 from .models import Metal, Price
 
 
@@ -20,8 +19,7 @@ def get_stooq_price(name):
             return None
 
 
-def update_metal_prices():
-    session = db.get_session()
+def update_metal_prices(session):
     metals = session.query(Metal).all()
     for metal in metals:
         value = get_stooq_price(metal.symbol)

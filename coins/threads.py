@@ -1,5 +1,6 @@
 import time
 from threading import Thread
+from . import db
 from .core import update_metal_prices
 
 
@@ -12,6 +13,7 @@ class PriceUpdateThread(Thread):
         self.interval = interval
 
     def run(self):
+        session = db.Session()
         while True:
-            update_metal_prices()
+            update_metal_prices(session)
             time.sleep(self.interval)
