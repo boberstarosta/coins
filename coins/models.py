@@ -12,6 +12,7 @@ class Metal(Base):
 
     id = Column(Integer, Sequence('metal_id_seq'), primary_key=True)
     name = Column(String(length=50))
+    symbol = Column(String(length=10))
 
     prices = relationship('Price', back_populates='metal')
     coins = relationship('Coin', back_populates='metal')
