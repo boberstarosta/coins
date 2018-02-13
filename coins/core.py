@@ -1,6 +1,8 @@
-import requests
 import re
+import requests
 from bs4 import BeautifulSoup
+from . import db
+from .models import Metal, Price
 
 
 def get_stooq_price(name):
@@ -16,3 +18,14 @@ def get_stooq_price(name):
             return float(tag.get_text())
         except ValueError:
             return None
+
+
+def update_metal_prices():
+    session = db.get_session()
+    metals = session.query(Metal).all()
+    for metal in metals:
+        value = get_stooq_price(metal.symbol)
+        if value is not None:
+            price = Price(metal=metal, value=value)
+            session.add(price)
+            session.commit()
