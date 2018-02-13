@@ -1,0 +1,3 @@
+DATABASE = {
+    'PATH': 'sqlite:///:memory:',
+}
