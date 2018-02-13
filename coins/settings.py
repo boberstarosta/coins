@@ -1,3 +1,1 @@
-DATABASE = {
-    'PATH': 'sqlite:///sqlite.db',
-}
+DATABASE_PATH = 'sqlite:///sqlite.db'
