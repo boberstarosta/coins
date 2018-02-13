@@ -23,21 +23,21 @@ class Metal(Base):
         return session.query(Price).filter_by(metal_id=self.id).order_by(Price.time.desc()).first()
 
     def __repr__(self):
-        return '<{} {} {} {}>'.format(self.__class__.__name__, self.id, self.symbol, self.name)
+        return '<{} {} {}>'.format(self.__class__.__name__, self.symbol, self.name)
 
 
 class Price(Base):
     __tablename__ = 'price'
 
     id = Column(Integer, Sequence('price_id_seq'), primary_key=True)
-    metal_id = Column(Integer, ForeignKey('metal.id'))
+    metal_symbol = Column(String(10), ForeignKey('metal.symbol'))
     time = Column(DateTime, default=datetime.datetime.now)
     value = Column(Float)
 
     metal = relationship('Metal', back_populates='prices')
 
     def __repr__(self):
-        return '<{} {} {} {} {}>'.format(self.__class__.__name__, self.id,self.metal.symbol,
+        return '<{} {} {} {} {}>'.format(self.__class__.__name__, self.id,self.metal_symbol,
                                          self.time.strftime(settings.DATETIME_FORMAT), self.value)
 
 
@@ -45,7 +45,7 @@ class Coin(Base):
     __tablename__ = 'coin'
 
     id = Column(Integer, Sequence('coin_id_seq'), primary_key=True)
-    metal_id = Column(Integer, ForeignKey('metal.id'))
+    metal_symbol = Column(String(10), ForeignKey('metal.symbol'))
 
     metal = relationship('Metal', back_populates='coins')
 
