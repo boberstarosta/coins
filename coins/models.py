@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Sequence
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Sequence, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -23,6 +23,7 @@ class Price(Base):
     id = Column(Integer, Sequence('price_id_seq'), primary_key=True)
     metal_id = Column(Integer, ForeignKey('metal.id'))
     time = Column(DateTime, default=datetime.datetime.now)
+    value = Column(Float)
 
     metal = relationship('Metal', back_populates='prices')
 
