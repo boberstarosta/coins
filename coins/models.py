@@ -2,7 +2,7 @@ import datetime
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Sequence, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from . import db
+from . import db, settings
 
 
 Base = declarative_base()
@@ -38,7 +38,8 @@ class Price(Base):
     metal = relationship('Metal', back_populates='prices')
 
     def __repr__(self):
-        return '<{} {} {} {} {}>'.format(self.__class__.__name__, self.id, self.metal.symbol, self.time, self.value)
+        return '<{} {} {} {} {}>'.format(self.__class__.__name__, self.id,self.metal.symbol,
+                                         self.time.strftime(settings.DATETIME_FORMAT), self.value)
 
 
 class Coin(Base):
