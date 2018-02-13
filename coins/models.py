@@ -20,7 +20,7 @@ class Metal(Base):
     @property
     def last_price(self):
         session = db.Session.object_session(self)
-        return session.query(Price).filter_by(metal_id=self.id).order_by(Price.time.desc()).first()
+        return session.query(Price).filter_by(metal_symbol=self.symbol).order_by(Price.time.desc()).first()
 
     def __repr__(self):
         return '<{} {} {}>'.format(self.__class__.__name__, self.symbol, self.name)
